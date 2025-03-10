@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+  <div class="input-row">
+    <mat-form-field>
+      <mat-label>Nombre de la Tarea</mat-label>
+      <input matInput formControlName="title" [(ngModel)]="task.title">
+      <mat-error *ngIf="taskForm.get('title')?.hasError('required')">
+        El Título es obligatorio
+      </mat-error>
+      <mat-error *ngIf="taskForm.get('title')?.hasError('minlength')">
+        El título debe tener al menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Descripción</mat-label>
+      <input matInput formControlName="description" [(ngModel)]="task.description">
+      <mat-error *ngIf="taskForm.get('description')?.hasError('required')">
+        La descripción es obligatoria
+      </mat-error>
+      <mat-error *ngIf="taskForm.get('description')?.hasError('minlength')">
+        La descripción debe tener al menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="input-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="status" [(ngModel)]="task.status">
+        <mat-option *ngFor="let status of statusOptions" [value]="status" >
+          {{ status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-flat-button color="primary" (click)="closeModal()">Cancelar</button>
+    <button mat-flat-button color="accent" type="submit" [disabled]="taskForm.invalid">Guardar</button>
+  </div>
+</form>
